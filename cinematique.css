@@ -1,0 +1,102 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #050b08;
+  font-family: "Courier New", Courier, monospace;
+  color: #e0e6ed;
+  overflow: hidden;
+  margin: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#background-scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.box-style {
+  position: absolute;
+  background: rgba(10, 20, 15, 0.9);
+  border: 3px solid #78813e;
+  padding: 20px;
+  z-index: 3;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+}
+
+#dialogue-box {
+  bottom: 20px;
+  left: 15%;
+  transform: none;
+  width: 65%;
+  height: 140px;
+}
+
+#character-name {
+  font-weight: bold;
+  color: #7f8839;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+#dialogue-text,
+#cinematic-text {
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+#cinematic-box {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 65%;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-color: #78813e;
+}
+
+.press-space {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  font-size: 0.8rem;
+  color: #555;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.hidden {
+  display: none !important;
+}
