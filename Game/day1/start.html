@@ -1,18 +1,34 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Routine</title>
+    <title>Routine - Jour 1</title>
+    <!-- Correction du chemin vers le CSS situé dans le dossier retour -->
+    <link rel="stylesheet" href="retour/base.css" />
   </head>
   <body>
-    <p>
-      Une nouvelle journée commence. Comme chaque matin, tu arrives à Fribourg
-      en train pour te rendre à tes cours à Eikon.
-    </p>
-    <p>
-      Le quai est animé. Les étudiants quittent peu à peu la gare tandis que
-      chacun reprend sa routine.
-    </p>
+    <div id="game-container">
+      <div id="background-scene"></div>
+
+      <!-- On le laisse vide, JavaScript s'occupe de mettre les poses PNG -->
+      <img id="character-sprite" src="" alt="Personnage" class="hidden" />
+
+      <!-- Boîte de dialogue standard -->
+      <div id="dialogue-box" class="box-style hidden">
+        <div id="character-name">Nom du perso</div>
+        <div id="dialogue-text">Le texte s'écrira ici...</div>
+        <div class="press-space">Appuyez sur Espace ➔</div>
+      </div>
+
+      <!-- Boîte de dialogue cinématique -->
+      <div id="cinematic-box" class="box-style hidden">
+        <div id="cinematic-text">Texte de la cinématique...</div>
+        <div class="press-space">Appuyez sur Espace ➔</div>
+      </div>
+    </div>
+
+    <!-- Correction du chemin pour aller chercher le script à la racine -->
+    <script src="../../script.js"></script>
   </body>
 </html>
