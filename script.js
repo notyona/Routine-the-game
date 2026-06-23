@@ -1,4 +1,3 @@
-// Déclaration des variables globales pour les éléments HTML
 let bgScene,
   charSprite,
   dialogueBox,
@@ -7,11 +6,7 @@ let bgScene,
   cinematicBox,
   cinematicText;
 
-// Base de données reprenant textuellement l'intégralité de tes lignes
 const storyData = [
-  // ==========================================
-  // GARE
-  // ==========================================
   {
     type: "cinematic",
     text: "Gare\nUne nouvelle journée commence.",
@@ -117,14 +112,14 @@ const storyData = [
   {
     type: "cinematic",
     text: "El professor entre dans la salle.",
-    bg: "cours/images/backgrounds/classe.jpg",
+    bg: "cours/images/backgrounds/Lily Place.png",
   },
   {
     type: "dialogue",
     name: "El Professor",
     text: "Bonjour à tous.",
     sprite: "cours/images/sprites/prof_pose1.png",
-    bg: "cours/images/backgrounds/classe.jpg",
+    bg: "cours/images/backgrounds/Lily Place.png",
   },
   {
     type: "dialogue",
@@ -142,357 +137,357 @@ const storyData = [
   {
     type: "cinematic",
     text: "Travail\nLe reste de la matinée se déroule normalement.",
-    bg: "cours/images/backgrounds/travail_pc.jpg",
+    bg: "cours/images/backgrounds/Lily Place.png",
   },
   {
     type: "cinematic",
     text: "Tu travailles sur ton projet pendant qu'El professor passe entre les tables pour répondre aux questions.",
-    bg: "cours/images/backgrounds/travail_pc.jpg",
+    bg: "cours/images/backgrounds/Lily Place.png",
   },
   {
     type: "cinematic",
     text: "Une journée de cours tout ce qu'il y a de plus classique.",
-    bg: "cours/images/backgrounds/travail_pc.jpg",
+    bg: "cours/images/backgrounds/Lily Place.png",
   },
 
   //
   {
     type: "cinematic",
     text: "Sortie de l'école\nLes cours sont terminés.",
-    bg: "cours/images/backgrounds/eikon_sortie.jpg",
+    bg: "cours/images/backgrounds/Meline Place.png",
   },
   {
     type: "cinematic",
     text: "En quittant le bâtiment, tu croises Meline.",
-    bg: "cours/images/backgrounds/eikon_sortie.jpg",
+    bg: "cours/images/backgrounds/Meline Place.png",
   },
   {
     type: "dialogue",
     name: "Meline",
     text: "Hé ! Tu rentres déjà ?",
-    sprite: "cours/images/sprites/meline_pose1.png",
-    bg: "cours/images/backgrounds/eikon_sortie.jpg",
+    sprite: "cours/images/sprites/pose meline5.png",
+    bg: "cours/images/backgrounds/Meline Place.png",
   },
   {
     type: "dialogue",
     name: "Joueur",
     text: "Ouais. Je vais reprendre le train.",
-    sprite: "",
-    bg: "cours/images/backgrounds/eikon_sortie.jpg",
+    sprite: "cours/images/sprites/pose meline.png",
+    bg: "cours/images/backgrounds/Meline Place.png",
   },
   {
     type: "dialogue",
     name: "Meline",
     text: "Moi aussi, mais je vais faire un détour avant.",
-    sprite: "cours/images/sprites/meline_pose2.png",
-    bg: "cours/images/backgrounds/eikon_sortie.jpg",
+    sprite: "cours/images/sprites/pose meline3.png",
+    bg: "cours/images/backgrounds/Meline Place.png",
   },
   {
     type: "dialogue",
     name: "Meline",
     text: "J'ai l'impression que cette journée a duré une éternité...",
-    sprite: "cours/images/sprites/meline_pose3.png",
-    bg: "cours/images/backgrounds/eikon_sortie.jpg",
+    sprite: "cours/images/sprites/pose meline2.png",
+    bg: "cours/images/backgrounds/Meline Place.png",
   },
   {
     type: "dialogue",
     name: "Joueur",
     text: "C'était surtout les cours qui étaient longs.",
-    sprite: "",
-    bg: "cours/images/backgrounds/eikon_sortie.jpg",
+    sprite: "cours/images/sprites/pose meline.png",
+    bg: "cours/images/backgrounds/Meline Place.png",
   },
   {
     type: "dialogue",
     name: "Meline",
     text: "Haha... peut-être.",
-    sprite: "cours/images/sprites/meline_pose1.png",
-    bg: "cours/images/backgrounds/eikon_sortie.jpg",
+    sprite: "cours/images/sprites/pose meline6.png",
+    bg: "cours/images/backgrounds/Meline Place.png",
   },
   {
     type: "dialogue",
     name: "Meline",
     text: "Bon, à demain !",
-    sprite: "cours/images/sprites/meline_pose1.png",
-    bg: "cours/images/backgrounds/eikon_sortie.jpg",
+    sprite: "cours/images/sprites/pose meline5.png",
+    bg: "cours/images/backgrounds/Meline Place.png",
   },
   {
     type: "dialogue",
     name: "Joueur",
     text: "À demain !",
-    sprite: "",
-    bg: "cours/images/backgrounds/eikon_sortie.jpg",
+    sprite: "cours/images/sprites/pose meline.png",
+    bg: "cours/images/backgrounds/Meline Place.png",
   },
   {
     type: "cinematic",
     text: "Meline s'éloigne pendant que tu reprends la route vers la gare.",
-    bg: "cours/images/backgrounds/route_gare.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
 
   {
     type: "cinematic",
     text: "Retour à la gare\nLe soleil commence doucement à descendre.",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "cinematic",
     text: "Après quelques minutes de marche, tu arrives à la gare.",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "cinematic",
     text: "Alors que tu t'apprêtes à rejoindre le quai, quelqu'un t'interpelle.",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Attends !",
     sprite: "cours/images/sprites/inconnu_pose1.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "cinematic",
     text: "Un étudiant que tu n'as jamais vu te regarde avec insistance.",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Enfin...",
     sprite: "cours/images/sprites/inconnu_pose1.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Je commençais à croire que tu ne passerais jamais.",
     sprite: "cours/images/sprites/inconnu_pose2.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "Joueur",
     text: "On se connaît ?",
     sprite: "",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Non.",
     sprite: "cours/images/sprites/inconnu_pose1.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Enfin...",
     sprite: "cours/images/sprites/inconnu_pose1.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Pas encore.",
     sprite: "cours/images/sprites/inconnu_pose2.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "cinematic",
     text: "Un silence s'installe.",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "Joueur",
     text: "Tu voulais quelque chose ?",
     sprite: "",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Oui.",
     sprite: "cours/images/sprites/inconnu_pose3.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "J'ai besoin de ton aide.",
     sprite: "cours/images/sprites/inconnu_pose3.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "Joueur",
     text: "Pour quoi ?",
     sprite: "",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "cinematic",
     text: "L'étudiant regarde autour de lui avant de reprendre d'une voix plus basse.",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Cette journée est bloquée.",
     sprite: "cours/images/sprites/inconnu_pose_chuchote.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "Joueur",
     text: "...Pardon ?",
     sprite: "",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Elle recommence.",
     sprite: "cours/images/sprites/inconnu_pose_serieux.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Encore.",
     sprite: "cours/images/sprites/inconnu_pose_serieux.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Et encore.",
     sprite: "cours/images/sprites/inconnu_pose_serieux.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Personne ne s'en rend compte.",
     sprite: "cours/images/sprites/inconnu_pose1.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Sauf moi.",
     sprite: "cours/images/sprites/inconnu_pose2.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "cinematic",
     text: "Le joueur reste silencieux.",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "Joueur",
     text: "C'est une caméra cachée ?",
     sprite: "",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "J'aimerais bien.",
     sprite: "cours/images/sprites/inconnu_pose_triste.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "À chaque nouvelle boucle, des anomalies apparaissent.",
     sprite: "cours/images/sprites/inconnu_pose1.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Des objets changent de place.",
     sprite: "cours/images/sprites/inconnu_pose1.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Certaines personnes agissent différemment.",
     sprite: "cours/images/sprites/inconnu_pose1.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Des choses qui ne devraient tout simplement pas exister.",
     sprite: "cours/images/sprites/inconnu_pose3.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Si tu en trouves une...",
     sprite: "cours/images/sprites/inconnu_pose_serieux.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Interagis avec elle.",
     sprite: "cours/images/sprites/inconnu_pose_serieux.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Les anomalies laissent toujours derrière elles un objet.",
     sprite: "cours/images/sprites/inconnu_pose1.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Ramène-les-moi.",
     sprite: "cours/images/sprites/inconnu_pose2.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Il y en a 3 en tout.",
     sprite: "cours/images/sprites/inconnu_pose2.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "Joueur",
     text: "Et ça servirait à quoi ?",
     sprite: "",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "...",
     sprite: "cours/images/sprites/inconnu_pose_silence.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Dépêche-toi.",
     sprite: "cours/images/sprites/inconnu_pose_urgence.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "???",
     text: "Le temps est écoulé.",
     sprite: "cours/images/sprites/inconnu_pose_urgence.png",
-    bg: "cours/images/backgrounds/gare_soir.jpg",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
 
   {
@@ -595,12 +590,17 @@ function renderStep() {
     // Gestion de l'affichage du personnage
     if (currentStep.sprite) {
       charSprite.src = currentStep.sprite;
-      // Ajuster la taille pour certains personnages (ex: El Professor)
-      if (currentStep.name === "El Professor" || currentStep.name === "Professeur") {
+      // Ajuster la taille et la position pour certains personnages (ex: El Professor)
+      if (
+        currentStep.name === "El Professor" ||
+        currentStep.name === "Professeur"
+      ) {
         charSprite.style.height = "420px";
+        charSprite.style.left = "14%";
       } else {
         // Retirer les styles inline pour reprendre la valeur CSS par défaut
         charSprite.style.height = "";
+        charSprite.style.left = "";
       }
       charSprite.classList.remove("hidden"); // REND VISIBLE LE PERSONNAGE
     } else {
