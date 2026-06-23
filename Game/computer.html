@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Routine</title>
+    <link rel="stylesheet" href="/computer.css">
+  </head>
+<body>
+
+<div class="bar-container">
+    <div class="bar" id="bar"></div>
+</div>
+
+<script>
+    const bar = document.getElementById("bar");
+    const body = document.body;
+
+    let value = 0;
+    const maxValue = 100;
+    let currentBg = 1;
+
+    function toggleBackground() {
+        currentBg = currentBg === 1 ? 2 : 1;
+        body.style.backgroundImage = `url(/img/Work-${currentBg}.png)`;
+    }
+
+    // Remplissage et basculement de l'arrière-plan lors de l'appui sur Espace
+    document.addEventListener("keydown", (event) => {
+        if (event.code === "Space") {
+            event.preventDefault();
+            value += 5;
+            if (value > maxValue) value = maxValue;
+            updateBar();
+            toggleBackground();
+        }
+    });
+
+    // Vidage progressif
+    setInterval(() => {
+        value -= 1.05;
+        if (value < 0) value = 0;
+        updateBar();
+    }, 50);
+
+    function updateBar() {
+        bar.style.width = value + "%";
+    }
+</script>
+
+</body>
+</html>
+  </body>
+</html>

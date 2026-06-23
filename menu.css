@@ -1,11 +1,26 @@
+* {
+  font-family: "Courier New", Courier, monospace;
+}
+
 a {
-  background-color: red;
+  display: flex;
+  font-size: 15vh;
+  max-width: fit-content;
+  color: antiquewhite;
+  margin: 20px 0px 0px 60px;
+  text-decoration-line: none;
 }
 
 option {
   display: flex;
   flex-direction: column;
   align-items: start;
-  justify-content: start;
-  font-size: 75vh;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 20vh;
+  margin: 75px 0px 55px 60px;
+  color: rgb(246, 201, 143);
+  font-family: Alagard;
 }
