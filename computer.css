@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  color: white;
+  background-image: url(/img/Work-1.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.bar-container {
+  width: 500px;
+  height: 40px;
+  border: 5px solid white;
+  overflow: hidden;
+  background: #060606;
+}
+
+.bar {
+  height: 100%;
+  background: rgb(255, 208, 0);
+}
+
+.all-bar {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 100px 0px;
+}
+
+h2 {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 75px;
+  margin: 10px 0px;
+}
