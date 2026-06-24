@@ -1,0 +1,33 @@
+body {
+  font-family: "Courier New", Courier, monospace;
+  color: antiquewhite;
+  margin: 100px 50px;
+  background-color: rgb(63, 73, 37);
+}
+
+.all-guy {
+  display: flex;
+}
+
+img {
+  width: 400px;
+  height: auto;
+}
+.cool-guy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+p {
+  margin: 100px 20px;
+}
+
+.goofy {
+  margin: 10px 70px;
+}
+
+.dont {
+  font-size: 100px;
+  margin: 100px auto;
+}
