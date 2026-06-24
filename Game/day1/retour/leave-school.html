@@ -4,12 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Routine</title>
+    <link rel="stylesheet" href="/cinematique.css" />
   </head>
   <body>
     <video
-      id="background-scene"
-      src="/img/Cinématique_1_CheminEIKON_avc_BRUIT.mp4"
+      id="cinematic-bg"
+      src="/img/cinematique/day1/Cinématique_1_CheminEIKON_avc_BRUIT.mp4"
       autoplay
+      controls
     ></video>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const video = document.getElementById("cinematic-bg");
+        if (video) {
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              // Autoplay with sound may be blocked by some browsers.
+            });
+          }
+
+          video.addEventListener("ended", () => {
+            window.location.href = "../alle/attente-bus.html";
+          });
+        }
+      });
+    </script>
+
+    <script src="/script.js"></script>
   </body>
 </html>
