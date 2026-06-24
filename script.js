@@ -348,7 +348,7 @@ const storyData = [
     type: "dialogue",
     name: "???",
     text: "Elle recommence.",
-    sprite: "cours/images/backgrounds/Emma place.png",
+    sprite: "cours/images/sprites/pose emma6.png",
     bg: "cours/images/backgrounds/Emma place.png",
   },
   {
@@ -376,7 +376,7 @@ const storyData = [
     type: "dialogue",
     name: "???",
     text: "Sauf moi.",
-    sprite: "cours/images/sprites/pose emma5.png",
+    sprite: "cours/images/sprites/pose emma.png",
     bg: "cours/images/backgrounds/Emma place.png",
   },
   {
@@ -402,7 +402,7 @@ const storyData = [
     type: "dialogue",
     name: "???",
     text: "À chaque nouvelle boucle, des anomalies apparaissent.",
-    sprite: "cours/images/sprites/pose emma5.png",
+    sprite: "cours/images/sprites/pose emma.png",
     bg: "cours/images/backgrounds/Emma place.png",
   },
   {
@@ -423,7 +423,7 @@ const storyData = [
     type: "dialogue",
     name: "???",
     text: "Des choses qui ne devraient tout simplement pas exister.",
-    sprite: "cours/images/sprites/pose emma5.png",
+    sprite: "cours/images/sprites/pose emma.png",
     bg: "cours/images/backgrounds/Emma place.png",
   },
   {
@@ -444,7 +444,7 @@ const storyData = [
     type: "dialogue",
     name: "???",
     text: "Les anomalies laissent toujours derrière elles un objet.",
-    sprite: "cours/images/sprites/pose emma5.png",
+    sprite: "cours/images/sprites/pose emma.png",
     bg: "cours/images/backgrounds/Emma place.png",
   },
   {
@@ -457,15 +457,15 @@ const storyData = [
   {
     type: "dialogue",
     name: "???",
-    text: "Il y en a 3 en tout.",
-    sprite: "cours/images/sprites/pose emma6.png",
+    text: "Il m'en manque 3 en tout.",
+    sprite: "cours/images/sprites/pose emma.png",
     bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "dialogue",
     name: "Joueur",
     text: "Et ça servirait à quoi ?",
-    sprite: "cours/images/sprites/pose emma5.png",
+    sprite: "cours/images/sprites/pose emma6.png",
     bg: "cours/images/backgrounds/Emma place.png",
   },
   {
@@ -538,6 +538,31 @@ let typingTimeout;
 let currentTextScheduled = "";
 let activeTextElement = null;
 
+function showTextImmediately(element, text) {
+  element.innerHTML = "";
+
+  if (text.includes("\n")) {
+    const [title, ...bodyParts] = text.split("\n");
+    const body = bodyParts.join("\n");
+
+    if (title && title.trim() !== "") {
+      const titleEl = document.createElement("div");
+      titleEl.className = "cinematic-title";
+      titleEl.textContent = title;
+      element.appendChild(titleEl);
+    }
+
+    if (body) {
+      const bodyEl = document.createElement("div");
+      bodyEl.className = "cinematic-body";
+      bodyEl.textContent = body;
+      element.appendChild(bodyEl);
+    }
+  } else {
+    element.textContent = text;
+  }
+}
+
 // Effet Machine à écrire
 function typeWriter(element, text, speed = 25) {
   isTyping = true;
@@ -554,6 +579,54 @@ function typeWriter(element, text, speed = 25) {
     }
   }
   type();
+}
+
+function typeCinematicText(element, text, speed = 25) {
+  isTyping = true;
+  element.innerHTML = "";
+
+  if (!text.includes("\n")) {
+    typeWriter(element, text, speed);
+    return;
+  }
+
+  const [title, ...bodyParts] = text.split("\n");
+  const body = bodyParts.join("\n");
+
+  const titleEl = document.createElement("div");
+  titleEl.className = "cinematic-title";
+  const bodyEl = document.createElement("div");
+  bodyEl.className = "cinematic-body";
+
+  element.appendChild(titleEl);
+  element.appendChild(bodyEl);
+
+  let titleIndex = 0;
+  let bodyIndex = 0;
+
+  function typeTitle() {
+    if (titleIndex < title.length) {
+      titleEl.textContent += title.charAt(titleIndex);
+      titleIndex++;
+      typingTimeout = setTimeout(typeTitle, speed);
+    } else if (body) {
+      typingTimeout = setTimeout(typeBody, speed);
+    } else {
+      isTyping = false;
+    }
+  }
+
+  function typeBody() {
+    if (bodyIndex < body.length) {
+      bodyEl.textContent += body.charAt(bodyIndex);
+      bodyIndex++;
+      typingTimeout = setTimeout(typeBody, speed);
+    } else {
+      isTyping = false;
+    }
+  }
+
+  typeTitle();
 }
 
 function renderStep() {
@@ -574,7 +647,7 @@ function renderStep() {
 
     activeTextElement = cinematicText;
     currentTextScheduled = currentStep.text;
-    typeWriter(cinematicText, currentStep.text);
+    typeCinematicText(cinematicText, currentStep.text);
   } else if (currentStep.type === "dialogue") {
     // Cacher la cinématique, afficher le dialogue standard
     cinematicBox.classList.add("hidden");
@@ -616,7 +689,7 @@ function renderStep() {
 function handleNext() {
   if (isTyping) {
     clearTimeout(typingTimeout);
-    activeTextElement.innerHTML = currentTextScheduled;
+    showTextImmediately(activeTextElement, currentTextScheduled);
     isTyping = false;
   } else {
     currentIndex++;

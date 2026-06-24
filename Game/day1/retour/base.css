@@ -75,6 +75,21 @@ body {
   line-height: 1.4;
 }
 
+.cinematic-title {
+  font-size: 1.35rem;
+  font-weight: bold;
+  color: #7f8839;
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.03em;
+}
+
+.cinematic-body {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #e0e6ed;
+  line-height: 1.5;
+}
+
 #cinematic-box {
   top: 50%;
   left: 50%;
