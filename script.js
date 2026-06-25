@@ -5,11 +5,80 @@ let bgScene,
   charName,
   cinematicBox,
   cinematicText,
-  storyVideo;
+  storyVideo,
+  minigameBox;
 
 let activeStepType = null;
 let currentInteractiveStep = null;
 
+// ─────────────────────────────────────────────
+// VARIABLES MINI-JEU
+// ─────────────────────────────────────────────
+let mgValue = 0;
+let mgInterval = null;
+let mgKeyHandler = null;
+let mgClickHandler = null;
+let mgCurrentBg = 1;
+
+function startMinigame(onComplete) {
+  mgValue = 0;
+  mgCurrentBg = 1;
+  const mgBar = document.getElementById("mg-bar");
+  mgBar.style.width = "0%";
+
+  function toggleMgBg() {
+    mgCurrentBg = mgCurrentBg === 1 ? 2 : 1;
+    bgScene.style.backgroundImage = `url('/img/Work-${mgCurrentBg}.png')`;
+  }
+
+  // Vidage progressif
+  mgInterval = setInterval(() => {
+    mgValue -= 1;
+    if (mgValue < 0) mgValue = 0;
+    mgBar.style.width = mgValue + "%";
+  }, 50);
+
+  // Remplissage à chaque appui sur Espace (capture phase pour bloquer handleNext)
+  mgKeyHandler = (e) => {
+    if (e.code === "Space") {
+      e.preventDefault();
+      e.stopPropagation();
+      mgValue += 5.25;
+      if (mgValue > 100) mgValue = 100;
+      mgBar.style.width = mgValue + "%";
+      toggleMgBg();
+
+      if (mgValue >= 100) {
+        endMinigame(onComplete);
+      }
+    }
+  };
+
+  // Bloque les clics pour ne pas avancer l'histoire pendant le mini-jeu
+  mgClickHandler = (e) => {
+    e.stopPropagation();
+  };
+
+  window.addEventListener("keydown", mgKeyHandler, true);
+  minigameBox.addEventListener("click", mgClickHandler, true);
+}
+
+function endMinigame(onComplete) {
+  clearInterval(mgInterval);
+  window.removeEventListener("keydown", mgKeyHandler, true);
+  minigameBox.removeEventListener("click", mgClickHandler, true);
+  mgKeyHandler = null;
+  mgClickHandler = null;
+
+  setTimeout(() => {
+    minigameBox.classList.add("hidden");
+    onComplete();
+  }, 300);
+}
+
+// ─────────────────────────────────────────────
+// DONNÉES DE L'HISTOIRE
+// ─────────────────────────────────────────────
 const storyData = [
   {
     type: "cinematic",
@@ -73,7 +142,6 @@ const storyData = [
     text: "Les portes s'ouvrent et vous montez dans le bus.",
     bg: "cours/images/backgrounds/arret_bus.jpg",
   },
-
   {
     type: "cinematic",
     text: "Arrivée à Eikon\nQuelques minutes plus tard, le bus s'arrête devant Eikon.",
@@ -91,9 +159,8 @@ const storyData = [
   },
   {
     type: "video",
-    src: "../../img/cinematique/day1/Cinématique_2_Bus_eikon_avec_BRUITS.mp4",
+    src: "../../img/cinematique/day1/Cinématique_2_Bus_eikon_avec_BRUITS.mp4",
   },
-
   {
     type: "cinematic",
     text: "Salle de classe\nLily est déjà installée.",
@@ -145,6 +212,12 @@ const storyData = [
     bg: "cours/images/backgrounds/Lily Place.png",
   },
 
+  // ★ MINI-JEU INSÉRÉ ICI ★
+  {
+    type: "minigame",
+    bg: "cours/images/backgrounds/Lily Place.png",
+  },
+
   {
     type: "cinematic",
     text: "Travail\nLe reste de la matinée se déroule normalement.",
@@ -160,17 +233,15 @@ const storyData = [
     text: "Une journée de cours tout ce qu'il y a de plus classique.",
     bg: "cours/images/backgrounds/Lily Place.png",
   },
-
   {
     type: "video",
-    src: "../../img/cinematique/day1/Cinématique_3_Sortant d'eikon_avantMeline.mp4",
+    src: "../../img/cinematique/day1/Cinématique_3_Sortant d'eikon_avantMeline.mp4",
   },
   {
     type: "cinematic",
     text: "Sortie de l'école\nLes cours sont terminés.",
     bg: "cours/images/backgrounds/Meline Place.png",
   },
-
   {
     type: "cinematic",
     text: "En quittant le bâtiment, tu croises Meline.",
@@ -237,7 +308,6 @@ const storyData = [
     text: "Meline s'éloigne pendant que tu reprends la route vers la gare.",
     bg: "cours/images/backgrounds/Meline Place.png",
   },
-
   {
     type: "cinematic",
     text: "Retour à la gare\nLe soleil commence doucement à descendre.",
@@ -252,7 +322,6 @@ const storyData = [
     text: "Après quelques minutes de marche, tu arrives à la gare.",
     bg: "cours/images/backgrounds/Meline Place.png",
   },
-
   {
     type: "cinematic",
     text: "Alors que tu t'apprêtes à rejoindre le quai, quelqu'un t'interpelle.",
@@ -509,7 +578,6 @@ const storyData = [
     sprite: "cours/images/sprites/pose emma3.png",
     bg: "cours/images/backgrounds/Emma place.png",
   },
-
   {
     type: "cinematic",
     text: "Quai\nTu rejoins le quai tandis que le train entre en gare.",
@@ -629,14 +697,13 @@ const storyDataByDay = {
     },
     {
       type: "video",
-      src: "../../img/cinematique/day1/Cinématique_Day_2_Avant Anomalie1.mp4",
+      src: "../../img/cinematique/day1/Cinématique_Day_2_Avant Anomalie1.mp4",
     },
     {
       type: "cinematic",
       text: "Tu traverses la court et les couloirs pour rejoindre ta salle de classe.",
       bg: "cours/images/backgrounds/Background_ANomalie 1_Monstre.png",
     },
-
     {
       type: "cinematic",
       text: "|ANOMALIE: Le Doppelgänger se tient derrière un mur du couloir.|",
@@ -658,7 +725,7 @@ const storyDataByDay = {
     },
     {
       type: "video",
-      src: "../../img/cinematique/day1/Cinématique_Day_2_Après Anomalie1.mp4",
+      src: "../../img/cinematique/day1/Cinématique_Day_2_Après Anomalie1.mp4",
     },
     {
       type: "cinematic",
@@ -710,6 +777,13 @@ const storyDataByDay = {
       text: "Les élèves s'installent et le cours commence.",
       bg: "cours/images/backgrounds/Lily Place.png",
     },
+
+    // ★ MINI-JEU JOUR 2 ★
+    {
+      type: "minigame",
+      bg: "cours/images/backgrounds/Lily Place.png",
+    },
+
     {
       type: "cinematic",
       text: "Travail\nLe reste de la matinée se déroule normalement.",
@@ -1038,6 +1112,13 @@ const storyDataByDay = {
       text: "Les élèves s'installent et le cours commence.",
       bg: "cours/images/backgrounds/Lily Place.png",
     },
+
+    // ★ MINI-JEU JOUR 3 ★
+    {
+      type: "minigame",
+      bg: "cours/images/backgrounds/Lily Place.png",
+    },
+
     {
       type: "cinematic",
       text: "Travail\nLe reste de la matinée se déroule normalement.",
@@ -1073,14 +1154,14 @@ const storyDataByDay = {
     {
       type: "dialogue",
       name: "Joueur",
-      text: "Oui, j’ai l’impression de devenir fou.",
+      text: "Oui, j'ai l'impression de devenir fou.",
       sprite: "cours/images/sprites/pose meline.png",
       bg: "cours/images/backgrounds/Meline Place.png",
     },
     {
       type: "dialogue",
       name: "Meline",
-      text: "Haha, comme d’habitude !",
+      text: "Haha, comme d'habitude !",
       sprite: "cours/images/sprites/pose meline3.png",
       bg: "cours/images/backgrounds/Meline Place.png",
     },
@@ -1139,7 +1220,6 @@ const storyDataByDay = {
     {
       type: "cinematic",
       text: "Après quelques minutes de marche.\n\n|ANOMALIE: Des toilettes sont au milieu de la route.|",
-
       bg: "cours/images/backgrounds/Backgrounf_anomalie2_Toilette.png",
     },
     {
@@ -1407,6 +1487,13 @@ const storyDataByDay = {
       text: "Les élèves s'installent et le cours commence.",
       bg: "cours/images/backgrounds/Lily Place.png",
     },
+
+    // ★ MINI-JEU JOUR 4 ★
+    {
+      type: "minigame",
+      bg: "cours/images/backgrounds/Lily Place.png",
+    },
+
     {
       type: "cinematic",
       text: "Travail\nLe reste de la matinée se déroule normalement.",
@@ -1611,6 +1698,9 @@ const storyDataByDay = {
   ],
 };
 
+// ─────────────────────────────────────────────
+// ÉTAT DE L'HISTOIRE
+// ─────────────────────────────────────────────
 let currentDay = 1;
 let currentIndex = 0;
 let isTyping = false;
@@ -1618,6 +1708,9 @@ let typingTimeout;
 let currentTextScheduled = "";
 let activeTextElement = null;
 
+// ─────────────────────────────────────────────
+// FONCTIONS TEXTE
+// ─────────────────────────────────────────────
 function showTextImmediately(element, text) {
   element.innerHTML = "";
 
@@ -1643,7 +1736,6 @@ function showTextImmediately(element, text) {
   }
 }
 
-// Effet Machine à écrire
 function typeWriter(element, text, speed = 25) {
   isTyping = true;
   element.innerHTML = "";
@@ -1709,6 +1801,9 @@ function typeCinematicText(element, text, speed = 25) {
   typeTitle();
 }
 
+// ─────────────────────────────────────────────
+// RENDU DE L'ÉTAPE
+// ─────────────────────────────────────────────
 function renderStep() {
   const currentStory = storyDataByDay[currentDay] || storyDataByDay[1];
 
@@ -1719,7 +1814,6 @@ function renderStep() {
       renderStep();
       return;
     }
-
     currentDay = 1;
     currentIndex = 0;
     renderStep();
@@ -1733,12 +1827,14 @@ function renderStep() {
     bgScene.style.backgroundImage = `url('${currentStep.bg}')`;
   }
 
+  // ── VIDÉO ──
   if (currentStep.type === "video") {
     clearTimeout(typingTimeout);
     isTyping = false;
     cinematicBox.classList.add("hidden");
     dialogueBox.classList.add("hidden");
     charSprite.classList.add("hidden");
+    minigameBox.classList.add("hidden");
     storyVideo.classList.remove("hidden");
     storyVideo.src = currentStep.src;
     storyVideo.currentTime = 0;
@@ -1755,9 +1851,27 @@ function renderStep() {
   storyVideo.removeAttribute("src");
   storyVideo.load();
 
+  // ── MINI-JEU ──
+  if (currentStep.type === "minigame") {
+    cinematicBox.classList.add("hidden");
+    dialogueBox.classList.add("hidden");
+    charSprite.classList.add("hidden");
+    minigameBox.classList.remove("hidden");
+    activeStepType = "minigame";
+    activeTextElement = null;
+
+    startMinigame(() => {
+      currentIndex++;
+      renderStep();
+    });
+    return;
+  }
+
+  // ── CINÉMATIQUE ──
   if (currentStep.type === "cinematic") {
     dialogueBox.classList.add("hidden");
-    cinematicBox.classList.remove("hidden"); // REND VISIBLE
+    minigameBox.classList.add("hidden");
+    cinematicBox.classList.remove("hidden");
 
     if (currentStep.sprite) {
       charSprite.src = currentStep.sprite;
@@ -1783,19 +1897,16 @@ function renderStep() {
     activeTextElement = cinematicText;
     currentTextScheduled = currentStep.text;
     typeCinematicText(cinematicText, currentStep.text);
-  } else if (currentStep.type === "dialogue") {
-    // Cacher la cinématique, afficher le dialogue standard
+  }
+
+  // ── DIALOGUE ──
+  else if (currentStep.type === "dialogue") {
     cinematicBox.classList.add("hidden");
-    dialogueBox.classList.remove("hidden"); // REND VISIBLE
+    minigameBox.classList.add("hidden");
+    dialogueBox.classList.remove("hidden");
 
-    // Cacher le nom si c'est le joueur
-    if (currentStep.name === "Joueur") {
-      charName.innerText = "";
-    } else {
-      charName.innerText = currentStep.name;
-    }
+    charName.innerText = currentStep.name === "Joueur" ? "" : currentStep.name;
 
-    // Gestion de l'affichage du personnage
     if (currentStep.sprite) {
       charSprite.src = currentStep.sprite;
       charSprite.classList.remove("interactive-object");
@@ -1806,10 +1917,8 @@ function renderStep() {
       charSprite.style.top = "";
       charSprite.style.transform = "";
       charSprite.style.objectFit = "";
-      // Ajuster la taille et la position pour certains personnages (ex: El Professor)
+
       if (currentStep.name === "Le Doppelgänger") {
-        charSprite.style.height = "";
-        charSprite.style.left = "";
         charSprite.style.right = "9%";
       } else if (
         currentStep.name === "El Professor" ||
@@ -1817,15 +1926,10 @@ function renderStep() {
       ) {
         charSprite.style.height = "420px";
         charSprite.style.left = "14%";
-        charSprite.style.right = "";
-      } else {
-        // Retirer les styles inline pour reprendre la valeur CSS par défaut
-        charSprite.style.height = "";
-        charSprite.style.left = "";
-        charSprite.style.right = "";
       }
+
       charSprite.style.cursor = "";
-      charSprite.classList.remove("hidden"); // REND VISIBLE LE PERSONNAGE
+      charSprite.classList.remove("hidden");
     } else {
       charSprite.classList.add("hidden");
     }
@@ -1837,22 +1941,91 @@ function renderStep() {
   }
 }
 
+// ─────────────────────────────────────────────
+// AVANCER L'HISTOIRE
+// ─────────────────────────────────────────────
 function handleNext() {
+  if (activeStepType === "minigame") return; // le mini-jeu gère lui-même la progression
+
   if (isTyping) {
     clearTimeout(typingTimeout);
     showTextImmediately(activeTextElement, currentTextScheduled);
     isTyping = false;
-  } else if (activeStepType === "video") {
-    currentIndex++;
-    renderStep();
   } else {
     currentIndex++;
     renderStep();
   }
 }
 
-// Sécurité : On attend que le HTML soit chargé, on lie les éléments et on lance
+// ─────────────────────────────────────────────
+// INJECTION DU HTML ET CSS DU MINI-JEU
+// ─────────────────────────────────────────────
+function injectMinigameUI() {
+  // ── CSS ──
+  const style = document.createElement("style");
+  style.textContent = `
+    #minigame-box {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      z-index: 10;
+    }
+    #minigame-box.hidden {
+      display: none;
+    }
+    #mg-all-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 100px;
+    }
+    #mg-title {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 75px;
+      color: white;
+      margin: 10px 0;
+    }
+    #mg-bar-container {
+      width: 500px;
+      height: 40px;
+      border: 5px solid white;
+      overflow: hidden;
+      background: #060606;
+    }
+    #mg-bar {
+      height: 100%;
+      width: 0%;
+      background: rgb(255, 208, 0);
+      transition: width 0.05s linear;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // ── HTML ──
+  const box = document.createElement("div");
+  box.id = "minigame-box";
+  box.className = "hidden";
+  box.innerHTML = `
+    <div id="mg-all-bar">
+      <h2 id="mg-title">Work bar</h2>
+      <div id="mg-bar-container">
+        <div id="mg-bar"></div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(box);
+}
+
+// ─────────────────────────────────────────────
+// INITIALISATION
+// ─────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
+  // Injection du mini-jeu dans le DOM
+  injectMinigameUI();
+
+  // Récupération des éléments existants
   bgScene = document.getElementById("background-scene");
   charSprite = document.getElementById("character-sprite");
   dialogueBox = document.getElementById("dialogue-box");
@@ -1861,7 +2034,9 @@ document.addEventListener("DOMContentLoaded", () => {
   cinematicBox = document.getElementById("cinematic-box");
   cinematicText = document.getElementById("cinematic-text");
   storyVideo = document.getElementById("story-video");
+  minigameBox = document.getElementById("minigame-box");
 
+  // Fin de vidéo → étape suivante
   storyVideo.addEventListener("ended", () => {
     if (activeStepType === "video") {
       currentIndex++;
@@ -1869,9 +2044,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Clic sur un objet interactif
   charSprite.addEventListener("click", (e) => {
     e.stopPropagation();
-
     if (
       currentInteractiveStep &&
       currentInteractiveStep.interactive &&
@@ -1882,7 +2057,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Écouteurs d'événements
+  // Espace ou clic pour avancer
   window.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
       e.preventDefault();
@@ -1894,6 +2069,6 @@ document.addEventListener("DOMContentLoaded", () => {
     handleNext();
   });
 
-  // Lancement de la première scène
+  // Lancement
   renderStep();
 });
