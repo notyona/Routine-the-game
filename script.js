@@ -8,6 +8,14 @@ let bgScene,
   storyVideo,
   minigameBox;
 
+// MUSIQUE
+let gameMusic;
+
+let doppelgangerSound;
+let toiletSound;
+let fishSound;
+let portailSound;
+
 let activeStepType = null;
 let currentInteractiveStep = null;
 
@@ -140,22 +148,23 @@ const storyData = [
   {
     type: "cinematic",
     text: "Les portes s'ouvrent et vous montez dans le bus.",
-    bg: "cours/images/backgrounds/arret_bus.jpg",
+    bg: "cours/images/backgrounds/arret_bus3.png",
   },
+
   {
     type: "cinematic",
     text: "Arrivée à Eikon\nQuelques minutes plus tard, le bus s'arrête devant Eikon.",
-    bg: "cours/images/backgrounds/eikon_exterieur.jpg",
+    bg: "cours/images/backgrounds/arret_bus3.png",
   },
   {
     type: "cinematic",
     text: "Les étudiants descendent et se dirigent vers les bâtiments de l'école.",
-    bg: "cours/images/backgrounds/eikon_exterieur.jpg",
+    bg: "cours/images/backgrounds/arret_bus3.png",
   },
   {
     type: "cinematic",
     text: "Tu traverses la court et les couloirs pour rejoindre ta salle de classe.",
-    bg: "cours/images/backgrounds/eikon_couloir.jpg",
+    bg: "cours/images/backgrounds/arret_bus3.png",
   },
   {
     type: "video",
@@ -309,18 +318,18 @@ const storyData = [
     bg: "cours/images/backgrounds/Meline Place.png",
   },
   {
-    type: "cinematic",
-    text: "Retour à la gare\nLe soleil commence doucement à descendre.",
-    bg: "cours/images/backgrounds/Meline Place.png",
-  },
-  {
     type: "video",
     src: "../../img/cinematique/day1/Cinématique_4_CheminGare_Avant_Emma.mp4",
   },
   {
     type: "cinematic",
+    text: "Retour à la gare\nLe soleil commence doucement à descendre.",
+    bg: "cours/images/backgrounds/Emma place.png",
+  },
+  {
+    type: "cinematic",
     text: "Après quelques minutes de marche, tu arrives à la gare.",
-    bg: "cours/images/backgrounds/Meline Place.png",
+    bg: "cours/images/backgrounds/Emma place.png",
   },
   {
     type: "cinematic",
@@ -622,6 +631,10 @@ const storyData = [
 
 const storyDataByDay = {
   1: storyData,
+
+  // ═══════════════════════════════════════════
+  // JOUR 2
+  // ═══════════════════════════════════════════
   2: [
     {
       type: "cinematic",
@@ -638,6 +651,7 @@ const storyDataByDay = {
       text: "Le quai est animé. Les étudiants quittent peu à peu la gare tandis que chacun reprend sa routine.\n\nObjectif : Rejoindre l'arrêt de bus.",
       bg: "cours/images/backgrounds/gare_quai.png",
     },
+    // Chemin gare → arrêt bus
     {
       type: "video",
       src: "../../img/cinematique/day1/Cinématique_1_CheminEIKON_avc_BRUIT.mp4",
@@ -683,30 +697,33 @@ const storyDataByDay = {
     {
       type: "cinematic",
       text: "Les portes s'ouvrent et vous montez dans le bus.",
-      bg: "cours/images/backgrounds/arret_bus.jpg",
+      bg: "cours/images/backgrounds/arret_bus3.png",
     },
+    // Trajet bus → Eikon
+
     {
       type: "cinematic",
       text: "Arrivée à Eikon\nQuelques minutes plus tard, le bus s'arrête devant Eikon.",
-      bg: "cours/images/backgrounds/eikon_exterieur.jpg",
+      bg: "cours/images/backgrounds/arret_bus3.png",
     },
     {
       type: "cinematic",
       text: "Les étudiants descendent et se dirigent vers les bâtiments de l'école.",
-      bg: "cours/images/backgrounds/eikon_exterieur.jpg",
+      bg: "cours/images/backgrounds/arret_bus3.png",
     },
+    // Couloir Eikon → anomalie Doppelgänger
     {
       type: "video",
       src: "../../img/cinematique/day1/Cinématique_Day_2_Avant Anomalie1.mp4",
     },
     {
       type: "cinematic",
-      text: "Tu traverses la court et les couloirs pour rejoindre ta salle de classe.",
+      text: "Tu traverses la cour et les couloirs pour rejoindre ta salle de classe.",
       bg: "cours/images/backgrounds/Background_ANomalie 1_Monstre.png",
     },
     {
       type: "cinematic",
-      text: "|ANOMALIE: Le Doppelgänger se tient derrière un mur du couloir.|",
+      text: "Le Doppelgänger se tient derrière un mur du couloir.",
       bg: "cours/images/backgrounds/Background_ANomalie 1_Monstre.png",
     },
     {
@@ -718,11 +735,12 @@ const storyDataByDay = {
     },
     {
       type: "cinematic",
-      text: "Click.\nIl disparaît et drop une clef (Objet 1).",
+      text: "Click.\nIl disparaît et drop une clef.",
       sprite: "cours/images/sprites/clé.png",
       interactive: true,
       bg: "cours/images/backgrounds/Background_ANomalie 1_Monstre.png",
     },
+    // Après anomalie Doppelgänger → salle de classe
     {
       type: "video",
       src: "../../img/cinematique/day1/Cinématique_Day_2_Après Anomalie1.mp4",
@@ -777,13 +795,11 @@ const storyDataByDay = {
       text: "Les élèves s'installent et le cours commence.",
       bg: "cours/images/backgrounds/Lily Place.png",
     },
-
     // ★ MINI-JEU JOUR 2 ★
     {
       type: "minigame",
       bg: "cours/images/backgrounds/Lily Place.png",
     },
-
     {
       type: "cinematic",
       text: "Travail\nLe reste de la matinée se déroule normalement.",
@@ -798,6 +814,11 @@ const storyDataByDay = {
       type: "cinematic",
       text: "Une journée de cours tout ce qu'il y a de plus classique.",
       bg: "cours/images/backgrounds/Lily Place.png",
+    },
+    // Sortie Eikon → Meline
+    {
+      type: "video",
+      src: "../../img/cinematique/day1/Cinématique_3_Sortant d'eikon_avantMeline.mp4",
     },
     {
       type: "cinematic",
@@ -868,7 +889,12 @@ const storyDataByDay = {
     {
       type: "cinematic",
       text: "Meline s'éloigne pendant que tu reprends la route vers la gare.",
-      bg: "cours/images/backgrounds/Emma place.png",
+      bg: "cours/images/backgrounds/Meline Place.png",
+    },
+    // Chemin Meline → Emma (gare)
+    {
+      type: "video",
+      src: "../../img/cinematique/day1/Cinématique_4_CheminGare_Avant_Emma.mp4",
     },
     {
       type: "cinematic",
@@ -918,7 +944,7 @@ const storyDataByDay = {
     },
     {
       type: "cinematic",
-      text: "Le joueur donne la clef (Objet 1).",
+      text: "Le joueur donne la clef.",
       bg: "cours/images/backgrounds/Emma place.png",
     },
     {
@@ -950,17 +976,17 @@ const storyDataByDay = {
     {
       type: "cinematic",
       text: "Quai\nTu rejoins le quai tandis que le train entre en gare.",
-      bg: "cours/images/backgrounds/quai_nuit.jpg",
+      bg: "cours/images/backgrounds/Emma place.png",
     },
     {
       type: "cinematic",
       text: "Les portes s'ouvrent.",
-      bg: "cours/images/backgrounds/quai_nuit.jpg",
+      bg: "cours/images/backgrounds/Emma place.png",
     },
     {
       type: "cinematic",
       text: "Tu fais un pas en avant...",
-      bg: "cours/images/backgrounds/quai_nuit.jpg",
+      bg: "cours/images/backgrounds/Emma place.png",
     },
     {
       type: "cinematic",
@@ -980,14 +1006,18 @@ const storyDataByDay = {
     {
       type: "cinematic",
       text: "L'image revient.\nTu te trouves de nouveau sur le quai de Fribourg.",
-      bg: "cours/images/backgrounds/gare_matin.jpg",
+      bg: "cours/images/backgrounds/gare_quai.png",
     },
     {
       type: "cinematic",
       text: "Comme si rien ne s'était passé.\n\nLa boucle recommence.",
-      bg: "cours/images/backgrounds/gare_matin.jpg",
+      bg: "cours/images/backgrounds/gare_quai.png",
     },
   ],
+
+  // ═══════════════════════════════════════════
+  // JOUR 3
+  // ═══════════════════════════════════════════
   3: [
     {
       type: "cinematic",
@@ -1003,6 +1033,11 @@ const storyDataByDay = {
       type: "cinematic",
       text: "Le quai est animé. Les étudiants quittent peu à peu la gare tandis que chacun reprend sa routine.\n\nObjectif : Rejoindre l'arrêt de bus.",
       bg: "cours/images/backgrounds/gare_quai.png",
+    },
+    // Chemin gare → arrêt bus
+    {
+      type: "video",
+      src: "../../img/cinematique/day1/Cinématique_1_CheminEIKON_avc_BRUIT.mp4",
     },
     {
       type: "cinematic",
@@ -1045,22 +1080,28 @@ const storyDataByDay = {
     {
       type: "cinematic",
       text: "Les portes s'ouvrent et vous montez dans le bus.",
-      bg: "cours/images/backgrounds/arret_bus.jpg",
+      bg: "cours/images/backgrounds/arret_bus3.png",
     },
+    // Trajet bus → Eikon
+
     {
       type: "cinematic",
       text: "Arrivée à Eikon\nQuelques minutes plus tard, le bus s'arrête devant Eikon.",
-      bg: "cours/images/backgrounds/eikon_exterieur.jpg",
+      bg: "cours/images/backgrounds/arret_bus3.png",
     },
     {
       type: "cinematic",
       text: "Les étudiants descendent et se dirigent vers les bâtiments de l'école.",
-      bg: "cours/images/backgrounds/eikon_exterieur.jpg",
+      bg: "cours/images/backgrounds/arret_bus3.png",
     },
     {
       type: "cinematic",
-      text: "Tu traverses la court et les couloirs pour rejoindre ta salle de classe.",
-      bg: "cours/images/backgrounds/eikon_couloir.jpg",
+      text: "Tu traverses la cour et les couloirs pour rejoindre ta salle de classe.",
+      bg: "cours/images/backgrounds/arret_bus3.png",
+    },
+    {
+      type: "video",
+      src: "../../img/cinematique/day1/Cinématique_2_Bus_eikon_avec_BRUITS.mp4",
     },
     {
       type: "cinematic",
@@ -1112,13 +1153,11 @@ const storyDataByDay = {
       text: "Les élèves s'installent et le cours commence.",
       bg: "cours/images/backgrounds/Lily Place.png",
     },
-
     // ★ MINI-JEU JOUR 3 ★
     {
       type: "minigame",
       bg: "cours/images/backgrounds/Lily Place.png",
     },
-
     {
       type: "cinematic",
       text: "Travail\nLe reste de la matinée se déroule normalement.",
@@ -1133,6 +1172,11 @@ const storyDataByDay = {
       type: "cinematic",
       text: "Une journée de cours tout ce qu'il y a de plus classique.",
       bg: "cours/images/backgrounds/Lily Place.png",
+    },
+    // Sortie Eikon → Meline
+    {
+      type: "video",
+      src: "../../img/cinematique/day1/Cinématique_3_Sortant d'eikon_avantMeline.mp4",
     },
     {
       type: "cinematic",
@@ -1207,19 +1251,19 @@ const storyDataByDay = {
       sprite: "cours/images/sprites/pose meline.png",
       bg: "cours/images/backgrounds/Meline Place.png",
     },
+    // Après Meline → avant anomalie toilettes
     {
-      type: "cinematic",
-      text: "Meline s'éloigne pendant que tu reprends la route vers la gare.",
-      bg: "cours/images/backgrounds/Emma place.png",
+      type: "video",
+      src: "../../img/cinematique/day1/Cinématique_Day_3_Après interaction Meline_Avant Anomalie2.mp4",
     },
     {
       type: "cinematic",
-      text: "Retour à la gare\nLe soleil commence doucement à descendre.",
-      bg: "cours/images/backgrounds/Emma place.png",
+      text: "Marche jusqu'à la gare\nLe soleil commence doucement à descendre.",
+      bg: "cours/images/backgrounds/Backgrounf_anomalie2_Toilette.png",
     },
     {
       type: "cinematic",
-      text: "Après quelques minutes de marche.\n\n|ANOMALIE: Des toilettes sont au milieu de la route.|",
+      text: "Après quelques minutes de marche.\n\nDes toilettes sont au milieu de la route.",
       bg: "cours/images/backgrounds/Backgrounf_anomalie2_Toilette.png",
     },
     {
@@ -1231,10 +1275,15 @@ const storyDataByDay = {
     },
     {
       type: "cinematic",
-      text: "Click.\nElles disparaissent et drop du papier toilette (Objet 2).",
+      text: "Click.\nElles disparaissent et drop du papier toilette.",
       sprite: "cours/images/sprites/papiertualet.png",
       interactive: true,
       bg: "cours/images/backgrounds/Backgrounf_anomalie2_Toilette.png",
+    },
+    // Après anomalie toilettes → avant Emma
+    {
+      type: "video",
+      src: "../../img/cinematique/day1/Cinématique_Day_3_AprèsAnomalie2_Avant_interactionEmma.mp4",
     },
     {
       type: "cinematic",
@@ -1279,7 +1328,7 @@ const storyDataByDay = {
     },
     {
       type: "cinematic",
-      text: "Le joueur donne le papier toilette (Objet 2).",
+      text: "Le joueur donne le papier toilette.",
       bg: "cours/images/backgrounds/Emma place.png",
     },
     {
@@ -1349,6 +1398,10 @@ const storyDataByDay = {
       bg: "cours/images/backgrounds/gare_quai.png",
     },
   ],
+
+  // ═══════════════════════════════════════════
+  // JOUR 4
+  // ═══════════════════════════════════════════
   4: [
     {
       type: "cinematic",
@@ -1364,6 +1417,11 @@ const storyDataByDay = {
       type: "cinematic",
       text: "Le quai est animé. Les étudiants quittent peu à peu la gare tandis que chacun reprend sa routine.\n\nObjectif : Rejoindre l'arrêt de bus.",
       bg: "cours/images/backgrounds/gare_quai.png",
+    },
+    // Chemin gare → arrêt bus
+    {
+      type: "video",
+      src: "../../img/cinematique/day1/Cinématique_1_CheminEIKON_avc_BRUIT.mp4",
     },
     {
       type: "cinematic",
@@ -1406,22 +1464,28 @@ const storyDataByDay = {
     {
       type: "cinematic",
       text: "Les portes s'ouvrent et vous montez dans le bus.",
-      bg: "cours/images/backgrounds/arret_bus.jpg",
+      bg: "cours/images/backgrounds/arret_bus3.png",
     },
+    // Trajet bus → Eikon
+
     {
       type: "cinematic",
       text: "Arrivée à Eikon\nQuelques minutes plus tard, le bus s'arrête devant Eikon.",
-      bg: "cours/images/backgrounds/eikon_exterieur.jpg",
+      bg: "cours/images/backgrounds/arret_bus3.png",
     },
     {
       type: "cinematic",
       text: "Les étudiants descendent et se dirigent vers les bâtiments de l'école.",
-      bg: "cours/images/backgrounds/eikon_exterieur.jpg",
+      bg: "cours/images/backgrounds/arret_bus3.png",
     },
     {
       type: "cinematic",
-      text: "Tu traverses la court et les couloirs pour rejoindre ta salle de classe.",
-      bg: "cours/images/backgrounds/eikon_couloir.jpg",
+      text: "Tu traverses la cour et les couloirs pour rejoindre ta salle de classe.",
+      bg: "cours/images/backgrounds/arret_bus3.png",
+    },
+    {
+      type: "video",
+      src: "../../img/cinematique/day1/Cinématique_2_Bus_eikon_avec_BRUITS.mp4",
     },
     {
       type: "cinematic",
@@ -1487,13 +1551,11 @@ const storyDataByDay = {
       text: "Les élèves s'installent et le cours commence.",
       bg: "cours/images/backgrounds/Lily Place.png",
     },
-
     // ★ MINI-JEU JOUR 4 ★
     {
       type: "minigame",
       bg: "cours/images/backgrounds/Lily Place.png",
     },
-
     {
       type: "cinematic",
       text: "Travail\nLe reste de la matinée se déroule normalement.",
@@ -1508,6 +1570,11 @@ const storyDataByDay = {
       type: "cinematic",
       text: "Une journée de cours tout ce qu'il y a de plus classique.",
       bg: "cours/images/backgrounds/Lily Place.png",
+    },
+    // Sortie Eikon → Meline
+    {
+      type: "video",
+      src: "../../img/cinematique/day1/Cinématique_3_Sortant d'eikon_avantMeline.mp4",
     },
     {
       type: "cinematic",
@@ -1571,26 +1638,31 @@ const storyDataByDay = {
     {
       type: "cinematic",
       text: "Meline s'éloigne pendant que tu reprends la route vers la gare.",
-      bg: "cours/images/backgrounds/Emma place.png",
+      bg: "cours/images/backgrounds/Meline Place.png",
     },
     {
       type: "cinematic",
       text: "Retour à la gare\nLe soleil commence doucement à descendre.",
-      bg: "cours/images/backgrounds/Emma place.png",
+      bg: "cours/images/backgrounds/Meline Place.png",
     },
     {
       type: "cinematic",
       text: "Après quelques minutes de marche, tu arrives à la gare.",
-      bg: "cours/images/backgrounds/Emma place.png",
+      bg: "cours/images/backgrounds/Meline Place.png",
     },
     {
       type: "cinematic",
       text: "Quai\nTu rejoins le quai tandis que le train entre en gare.",
-      bg: "cours/images/backgrounds/Emma place.png",
+      bg: "cours/images/backgrounds/Meline Place.png",
+    },
+    // Avant anomalie poisson
+    {
+      type: "video",
+      src: "../../img/cinematique/day1/Cinématique_Day_4_end_Avant Anomalie3.mp4",
     },
     {
       type: "cinematic",
-      text: "|ANOMALIE: Un poisson fumeur se tient sur le quai.|",
+      text: "Un poisson fumeur se tient sur le quai.",
       sprite: "cours/images/sprites/poisson.png",
       bg: "cours/images/backgrounds/Background_Anomalie3_Poisson.png",
     },
@@ -1603,10 +1675,15 @@ const storyDataByDay = {
     },
     {
       type: "cinematic",
-      text: "Click.\nTousse puis meurt.\nLe poisson disparaît et drop un stick de poisson (Objet 3).",
+      text: "Click.\nTousse puis meurt.\nLe poisson disparaît et drop un stick de poisson.",
       sprite: "cours/images/sprites/stickpoisson.png",
       interactive: true,
       bg: "cours/images/backgrounds/Background_Anomalie3_Poisson.png",
+    },
+    // Après anomalie poisson → Emma fin
+    {
+      type: "video",
+      src: "../../img/cinematique/day1/Cinématique_Day_4_end_Après Anomalie3.mp4",
     },
     {
       type: "cinematic",
@@ -1634,7 +1711,7 @@ const storyDataByDay = {
     },
     {
       type: "cinematic",
-      text: "Le joueur donne les stick de poisson (Objet 3).",
+      text: "Le joueur donne les stick de poisson.",
       bg: "cours/images/backgrounds/Background_Emma_Ending.png",
     },
     {
@@ -1823,8 +1900,36 @@ function renderStep() {
   const currentStep = currentStory[currentIndex];
   currentInteractiveStep = currentStep.interactive ? currentStep : null;
 
+  // Son du Doppelgänger
+  if (currentStep.sprite && currentStep.sprite.includes("doppleganger.png")) {
+    doppelgangerSound.currentTime = 0;
+    doppelgangerSound.play().catch(() => {});
+  }
+
+  // Son des toilettes
+  if (currentStep.sprite && currentStep.sprite.includes("toilettes.png")) {
+    toiletSound.currentTime = 0;
+    toiletSound.play().catch(() => {});
+  }
+
+  // Son du poisson
+  if (currentStep.sprite && currentStep.sprite.includes("poisson.png")) {
+    fishSound.currentTime = 0;
+    fishSound.play().catch(() => {});
+  }
+
+  // Fin du jeu → arrêt progressif de la musique
+  if (currentDay === 4 && currentIndex === currentStory.length - 1) {
+    fadeOutMusic();
+  }
+
   if (currentStep.bg) {
     bgScene.style.backgroundImage = `url('${currentStep.bg}')`;
+  }
+
+  if (currentStep.bg && currentStep.bg.includes("Portail_END.png")) {
+    portailSound.currentTime = 0;
+    portailSound.play().catch(() => {});
   }
 
   // ── VIDÉO ──
@@ -1945,13 +2050,19 @@ function renderStep() {
 // AVANCER L'HISTOIRE
 // ─────────────────────────────────────────────
 function handleNext() {
-  if (activeStepType === "minigame") return; // le mini-jeu gère lui-même la progression
+  if (activeStepType === "minigame") return;
 
   if (isTyping) {
     clearTimeout(typingTimeout);
     showTextImmediately(activeTextElement, currentTextScheduled);
     isTyping = false;
   } else {
+    // 🔊 STOP PORTAIL SOUND
+    if (portailSound) {
+      portailSound.pause();
+      portailSound.currentTime = 0;
+    }
+
     currentIndex++;
     renderStep();
   }
@@ -1961,7 +2072,6 @@ function handleNext() {
 // INJECTION DU HTML ET CSS DU MINI-JEU
 // ─────────────────────────────────────────────
 function injectMinigameUI() {
-  // ── CSS ──
   const style = document.createElement("style");
   style.textContent = `
     #minigame-box {
@@ -2003,7 +2113,6 @@ function injectMinigameUI() {
   `;
   document.head.appendChild(style);
 
-  // ── HTML ──
   const box = document.createElement("div");
   box.id = "minigame-box";
   box.className = "hidden";
@@ -2019,13 +2128,54 @@ function injectMinigameUI() {
 }
 
 // ─────────────────────────────────────────────
+// MUSIQUE DE FOND
+// ─────────────────────────────────────────────
+function initMusic() {
+  gameMusic = new Audio("cours/images/sprites/soundtrack.mp3");
+  gameMusic.loop = true;
+  gameMusic.volume = 0.5;
+  gameMusic.play().catch(() => {
+    console.log("Autoplay bloqué.");
+  });
+}
+
+function startMusicOnce() {
+  if (gameMusic && gameMusic.paused) {
+    gameMusic.play().catch(() => {});
+  }
+  window.removeEventListener("click", startMusicOnce);
+  window.removeEventListener("keydown", startMusicOnce);
+}
+
+function fadeOutMusic() {
+  if (!gameMusic) return;
+  const fade = setInterval(() => {
+    if (gameMusic.volume > 0.05) {
+      gameMusic.volume -= 0.05;
+    } else {
+      gameMusic.volume = 0;
+      gameMusic.pause();
+      clearInterval(fade);
+    }
+  }, 200);
+}
+
+function initSounds() {
+  doppelgangerSound = new Audio(
+    "cours/images/sprites/doppelganger-anomalie.mp3",
+  );
+  toiletSound = new Audio("cours/images/sprites/toilet-flush.wav");
+  fishSound = new Audio("cours/images/sprites/bubble-fish.wav");
+  portailSound = new Audio("portail-long.mp3");
+  portailSound.loop = true;
+}
+
+// ─────────────────────────────────────────────
 // INITIALISATION
 // ─────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
-  // Injection du mini-jeu dans le DOM
   injectMinigameUI();
 
-  // Récupération des éléments existants
   bgScene = document.getElementById("background-scene");
   charSprite = document.getElementById("character-sprite");
   dialogueBox = document.getElementById("dialogue-box");
@@ -2036,7 +2186,12 @@ document.addEventListener("DOMContentLoaded", () => {
   storyVideo = document.getElementById("story-video");
   minigameBox = document.getElementById("minigame-box");
 
-  // Fin de vidéo → étape suivante
+  initMusic();
+  initSounds();
+
+  window.addEventListener("click", startMusicOnce);
+  window.addEventListener("keydown", startMusicOnce);
+
   storyVideo.addEventListener("ended", () => {
     if (activeStepType === "video") {
       currentIndex++;
@@ -2044,7 +2199,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Clic sur un objet interactif
   charSprite.addEventListener("click", (e) => {
     e.stopPropagation();
     if (
@@ -2057,7 +2211,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Espace ou clic pour avancer
   window.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
       e.preventDefault();
@@ -2069,6 +2222,5 @@ document.addEventListener("DOMContentLoaded", () => {
     handleNext();
   });
 
-  // Lancement
   renderStep();
 });
