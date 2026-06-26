@@ -1369,7 +1369,7 @@ const storyDataByDay = {
     },
     {
       type: "cinematic",
-      text: "Tu fais un pas en avant...",
+      text: "Tu fais un pas en avant..",
       bg: "cours/images/backgrounds/Emma place.png",
     },
     {
